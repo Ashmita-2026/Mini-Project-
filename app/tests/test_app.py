@@ -32,3 +32,12 @@ def test_environment(monkeypatch):
 
     assert response.status_code == 200
     assert response.json["environment"] == "development"
+    
+def test_services():
+    client = app.test_client()
+
+    response = client.get("/services")
+
+    assert response.status_code == 200
+    assert "services" in response.json
+    assert len(response.json["services"]) > 0
