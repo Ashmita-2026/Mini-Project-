@@ -1,13 +1,22 @@
 from flask import Flask
+import os
 
 app = Flask(__name__)
 
 
 @app.get("/health")
 def health():
-    return {
-        "status": "UP"
-    }
+    return {"status": "UP"}
+
+
+@app.get("/version")
+def version():
+    return {"version": os.getenv("APP_VERSION", "1.0.0")}
+
+
+@app.get("/environment")
+def environment():
+    return {"environment": os.getenv("APP_ENV", "development")}
 
 
 if __name__ == "__main__":
