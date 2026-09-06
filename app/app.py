@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.get("/health")
 def health():
-    return {"status": "Healthy"}
+    return {"status": "UP"}
 
 
 @app.get("/version")
