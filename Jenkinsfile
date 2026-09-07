@@ -39,18 +39,16 @@ pipeline {
         stage('Health Check') {
             steps {
                 sh '''
-                    docker run -d --name health-check \
-                        -p 5001:5000 \
+                    docker run -d --rm --name health-check \
                         -e APP_ENV=jenkins \
                         -e APP_VERSION=${BUILD_NUMBER} \
                         service-health-dashboard:${BUILD_NUMBER}
 
                     sleep 5
 
-                    curl --fail http://localhost:5001/health
+                    docker exec health-check python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/health').read().decode())"
 
-                    docker stop health-check
-                    docker rm health-check
+                    docker rm -f health-check
                 '''
             }
         }
