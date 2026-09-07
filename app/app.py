@@ -36,7 +36,7 @@ def services():
             },
             {
                 "name": "Database",
-                "technology": "PostgreSQL"
+                "technology": "SQLite"
             }
         ]
     }
