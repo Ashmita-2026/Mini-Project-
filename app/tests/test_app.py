@@ -42,6 +42,17 @@ def test_services():
     assert "services" in response.json
     assert len(response.json["services"]) > 0
     
+def test_services_status():
+    client = app.test_client()
+
+    response = client.get("/services/status")
+
+    assert response.status_code == 200
+    assert "services" in response.json
+    assert response.json["total_services"] == 2
+    assert response.json["services"][0]["status"] == "UP"
+    assert response.json["services"][1]["status"] == "UP"
+    
 def test_database_health():
     client = app.test_client()
 
