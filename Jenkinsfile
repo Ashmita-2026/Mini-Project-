@@ -39,7 +39,9 @@ pipeline {
         stage('Health Check') {
             steps {
                 sh '''
-                    docker run -d --rm --name health-check \
+                    docker rm -f health-check 2>/dev/null || true
+
+                    docker run -d --name health-check \
                         -e APP_ENV=jenkins \
                         -e APP_VERSION=${BUILD_NUMBER} \
                         service-health-dashboard:${BUILD_NUMBER}
@@ -51,6 +53,12 @@ pipeline {
                     docker rm -f health-check
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker rm -f health-check 2>/dev/null || true'
         }
     }
 }
