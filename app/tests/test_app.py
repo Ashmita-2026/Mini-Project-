@@ -41,3 +41,36 @@ def test_services():
     assert response.status_code == 200
     assert "services" in response.json
     assert len(response.json["services"]) > 0
+    
+def test_database_health():
+    client = app.test_client()
+
+    response = client.get("/database/health")
+
+    assert response.status_code == 200
+    assert response.json["database"] == "UP"
+
+
+def test_database_info():
+    client = app.test_client()
+
+    response = client.get("/database/info")
+
+    assert response.status_code == 200
+    assert response.json["app_name"] == "System Health Dashboard"
+    assert response.json["owner"] == "SRE Project"
+
+
+def test_system_summary():
+    client = app.test_client()
+
+    response = client.get("/system/summary")
+
+    assert response.status_code == 200
+    assert response.json["overall_status"] == "UP"
+    assert response.json["database"] == "UP"
+    assert response.json["services"] == 2
+    assert "cpu_percent" in response.json
+    assert "memory_percent" in response.json
+    assert "uptime_seconds" in response.json
+    assert "timestamp" in response.json

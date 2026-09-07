@@ -2,4 +2,5 @@ venv/
 .jenkins-venv/
 __pycache__/
 *.pyc
-.pytest_cache/
+.pytest_cache/system_health.db
+system_health.db
