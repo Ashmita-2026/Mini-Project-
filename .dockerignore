@@ -3,3 +3,4 @@ __pycache__/
 .pytest_cache/
 .git/
 .gitignore
+system_health.db
