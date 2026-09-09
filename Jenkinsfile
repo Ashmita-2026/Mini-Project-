@@ -48,7 +48,17 @@ pipeline {
 
                     sleep 5
 
+                    echo "Checking /health..."
                     docker exec health-check python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/health').read().decode())"
+
+                    echo "Checking /database/health..."
+                    docker exec health-check python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/database/health').read().decode())"
+
+                    echo "Checking /services/status..."
+                    docker exec health-check python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/services/status').read().decode())"
+
+                    echo "Checking /system/summary..."
+                    docker exec health-check python3 -c "import urllib.request; print(urllib.request.urlopen('http://localhost:5000/system/summary').read().decode())"
 
                     docker rm -f health-check
                 '''
